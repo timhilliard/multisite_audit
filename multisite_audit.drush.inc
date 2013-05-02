@@ -71,15 +71,15 @@ function drush_multisite_build_report($sites, $status) {
   }
   print "\n\n";
 
-  printf("%-30s", "Modules");
+  printf("%s,", "Modules");
   foreach ($sites as $site) {
-    printf("%-25s", $site['directory']);
+    printf("%s,", $site['directory']);
   }
-  printf("%-25s\n", "Available");
+  printf("%s\n", "Available");
 
   // Finally, output our matrix
   foreach ($matrix as $module => $site_list) {
-    printf("%-30s", $module);
+    printf("%s,", $module);
     foreach ($site_list as $site => $version) {
       if ($site == '@updates') {
         continue;
@@ -90,9 +90,9 @@ function drush_multisite_build_report($sites, $status) {
       else {
         $update = "";
       }
-      printf("%-25s", $version . $update);
+      printf("%s,", $version . $update);
     }
-    printf("%-25s\n", $matrix[$module]['@updates']);
+    printf("%s\n", $matrix[$module]['@updates']);
     $update = "";
   }
 }
