@@ -139,6 +139,7 @@ function drush_multisite_audit_fetch_update_details($module) {
  */
 function drush_multisite_get_modules($sites) {
   $status = array();
+  $count = 0;
 
   print "Extracting module lists\n";
 
@@ -164,12 +165,15 @@ function drush_multisite_get_modules($sites) {
           'version' => $info['version']
         );
       }
+      $count++;
     }
 
     print ".";
   }
 
   print "\n";
+
+  print "Found ". $count ." modules\n";
 
   return $status;
 }
@@ -198,7 +202,9 @@ function drush_multisite_audit_setup() {
   // Retrieve the connection string for each database
   foreach ($sites as $site => $values) {
     // Use drush to get the login details
-    $command_output = exec("drush sql-connect -l ". $values['directory']);
+    $command = "drush sql-connect -l ". $values['directory'];
+    // print $command . "\n";
+    $command_output = exec($command);
     $command_output = substr($command_output, 6);
     $command_output = str_replace(array('--'), array(''), $command_output);
     $params = explode(' ', $command_output);
