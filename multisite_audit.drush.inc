@@ -189,7 +189,7 @@ function drush_multisite_audit_setup() {
 
   if ($handle = @opendir('sites/')) {
     while (false !== ($directory = readdir($handle))) {
-      if (is_dir('sites/' . $directory) && !in_array($directory, $excluded_dirs)) {
+      if (is_dir('sites/' . $directory) && && !is_link('sites/' . $directory) && !in_array($directory, $excluded_dirs)) {
         $sites[] = array('directory' => $directory);
       }
     }
